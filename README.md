@@ -1,17 +1,29 @@
-# 🚀 AI BankApp – DevOps Containerized Banking Application
+# 🚀 AI BankApp — DevOps Containerized Banking Application
 
-A **Spring Boot banking application** enhanced with **DevOps practices and AI integration**.
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-green?style=for-the-badge&logo=springboot)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue?style=for-the-badge&logo=docker)
+![Docker Compose](https://img.shields.io/badge/Docker-Compose-blue?style=for-the-badge&logo=docker)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql)
+![AI](https://img.shields.io/badge/AI-TinyLlama-purple?style=for-the-badge)
+![DevOps](https://img.shields.io/badge/DevOps-Practice-red?style=for-the-badge)
 
-This project demonstrates how to **containerize, orchestrate, and run a modern application stack using Docker and Docker Compose**, while integrating a **local LLM (TinyLlama) using Ollama**.
+---
 
-The goal of this project is to practice **real-world DevOps workflows** including:
+## 📌 Project Overview
 
-- Containerization with Docker
-- Multi-stage Docker builds
-- Service orchestration with Docker Compose
-- Database containerization
-- Environment-based configuration
-- AI integration using local LLMs
+**AI BankApp** is a **Spring Boot banking application** enhanced with **DevOps practices and AI integration**.
+
+This project demonstrates how to build and run a **modern containerized application stack** using:
+
+- Docker
+- Docker Compose
+- Multi-stage container builds
+- Local AI models with Ollama
+
+The application simulates a **basic banking system** and integrates a **local AI assistant** that runs completely offline using **TinyLlama**.
+
+This repository is designed as a **DevOps portfolio project** showcasing containerization and service orchestration.
 
 ---
 
@@ -20,30 +32,58 @@ The goal of this project is to practice **real-world DevOps workflows** includin
 | Layer | Technology |
 |------|------------|
 | Backend | Spring Boot 3.4.1 |
-| Language | Java 21 |
+| Programming Language | Java 21 |
 | Security | Spring Security + BCrypt |
 | ORM | Spring Data JPA / Hibernate |
 | Frontend | Thymeleaf + Bootstrap 5 |
 | Database | MySQL 8.0 |
-| AI | Ollama + TinyLlama |
+| AI Engine | Ollama |
+| LLM Model | TinyLlama |
 | Containerization | Docker |
 | Orchestration | Docker Compose |
 
 ---
 
-# 📁 Project Structure
+# 🏗 System Architecture
+
+```
+                     🌐 User Browser
+                           │
+                           ▼
+                ┌─────────────────────┐
+                │   Spring Boot App   │
+                │      (BankApp)      │
+                │     Dockerized      │
+                └──────────┬──────────┘
+                           │
+         ┌─────────────────┴─────────────────┐
+         │                                   │
+         ▼                                   ▼
+  ┌───────────────┐                 ┌────────────────┐
+  │   MySQL 8.0   │                 │     Ollama     │
+  │   Database    │                 │  AI Runtime    │
+  │  (Container)  │                 │  (Container)   │
+  └───────────────┘                 └────────┬───────┘
+                                             │
+                                             ▼
+                                      TinyLlama Model
+```
+
+---
+
+# 📂 Project Structure
 
 ```
 AI-BankApp-DevOps
 │
-├── src/                       # Spring Boot source code
+├── src/                       # Spring Boot application source
 ├── .mvn/                      # Maven wrapper files
 ├── mvnw
 ├── mvnw.cmd
 ├── pom.xml
 │
 ├── Dockerfile                 # Standard Docker build
-├── Dockerfile.multistage      # Production multi-stage build
+├── Dockerfile.multistage      # Optimized multi-stage Docker build
 ├── docker-compose.yml         # Multi-container setup
 │
 └── README.md
@@ -51,83 +91,68 @@ AI-BankApp-DevOps
 
 ---
 
-# 🌐 System Architecture
-
-```
-                +------------------+
-                |      Browser     |
-                +--------+---------+
-                         |
-                         ▼
-               +-------------------+
-               |   Spring Boot     |
-               |    BankApp        |
-               |   (Docker)        |
-               +--------+----------+
-                        |
-        +---------------+---------------+
-        |                               |
-        ▼                               ▼
-+---------------+               +----------------+
-|   MySQL 8.0   |               |     Ollama     |
-|  (Container)  |               |   AI Server    |
-+---------------+               +--------+-------+
-                                         |
-                                         ▼
-                                   TinyLlama LLM
-```
-
----
-
-# 🔀 Branch Structure
+# 🌱 Branch Structure
 
 | Branch | Description |
 |------|-------------|
 | **start** | Base Spring Boot banking application |
-| **docker** | Containerized version with Docker & Docker Compose |
+| **docker** | Containerized application using Docker & Docker Compose |
+
+The **docker branch** demonstrates the DevOps implementation of the application.
 
 ---
 
 # ⚙️ Application Features
 
-### Banking Features
+### 💳 Banking Features
 
-- User registration and login
-- Secure password hashing with **BCrypt**
+- User registration
+- Secure login system
+- Password encryption using **BCrypt**
 - Deposit money
 - Withdraw money
-- Transfer money between users
+- Transfer funds between users
 - Transaction history
-
-### UI Features
-
-- Modern **Glassmorphism UI**
-- Dark / Light theme
-- Responsive Bootstrap layout
-
-### AI Features
-
-- AI assistant powered by **TinyLlama**
-- Runs locally using **Ollama**
-- No external API costs
 
 ---
 
-# 🐳 Running the Project with Docker
+### 🎨 UI Features
 
-This project is designed to run using **Docker Compose**, which starts:
+- Glassmorphism modern UI
+- Dark / Light theme
+- Responsive layout using Bootstrap
 
-- MySQL database
-- Spring Boot banking app
-- Ollama AI service
+---
 
-### Start the entire stack
+### 🤖 AI Assistant
+
+- Local AI chatbot
+- Powered by **TinyLlama**
+- Runs via **Ollama**
+- No external API required
+- Fully offline AI assistant
+
+---
+
+# 🐳 Running the Application
+
+This project is designed to run using **Docker Compose**, which starts all required services automatically.
+
+### Start the Application
 
 ```bash
 docker compose up --build
 ```
 
-### Access the application
+This command launches:
+
+- Spring Boot Banking App
+- MySQL Database
+- Ollama AI Service
+
+---
+
+### Access the Application
 
 ```
 http://localhost:8081
@@ -135,28 +160,44 @@ http://localhost:8081
 
 ---
 
-# ⚙️ Environment Configuration
+# 🤖 AI Model Setup
 
-The application receives configuration through **environment variables**.
+The TinyLlama model must be pulled once.
 
-| Variable | Purpose |
-|--------|--------|
+Run:
+
+```bash
+docker exec ollama ollama pull tinyllama
+```
+
+This downloads the model for the AI assistant.
+
+After that, the chatbot will work inside the application.
+
+---
+
+# ⚙️ Environment Variables
+
+| Variable | Description |
+|--------|-------------|
 | MYSQL_HOST | MySQL container hostname |
 | MYSQL_PORT | MySQL port |
 | MYSQL_DATABASE | Database name |
 | MYSQL_USER | Database username |
 | MYSQL_PASSWORD | Database password |
-| OLLAMA_URL | URL of Ollama AI service |
+| OLLAMA_URL | Ollama service URL |
 
 ---
 
 # 🐳 Docker Implementation
 
-This project includes **two Docker build strategies**.
+This project demonstrates **two Docker build strategies**.
 
-### Standard Dockerfile
+---
 
-Simple container build suitable for development.
+### 1️⃣ Standard Dockerfile
+
+A simple container build suitable for development.
 
 ```
 Dockerfile
@@ -164,41 +205,26 @@ Dockerfile
 
 ---
 
-### Multi-Stage Dockerfile
+### 2️⃣ Multi-Stage Docker Build
 
-Production-style build that separates:
+The multi-stage Dockerfile separates:
 
-1️⃣ **Build Stage**
+**Build Stage**
 
-- Uses Java JDK  
-- Compiles the application
+- Uses Java JDK
+- Compiles the Spring Boot application
 
-2️⃣ **Runtime Stage**
+**Runtime Stage**
 
-- Uses Java JRE  
-- Runs only the final JAR
+- Uses lightweight Java JRE
+- Runs only the final compiled JAR
 
 Benefits:
 
 - Smaller image size
-- Faster deployment
+- Faster deployments
 - Improved security
-
----
-
-# 🧠 AI Chatbot Setup
-
-The project uses **Ollama** to run a local LLM.
-
-First time only:
-
-```bash
-docker exec ollama ollama pull tinyllama
-```
-
-This downloads the **TinyLlama model**.
-
-After that the AI assistant becomes available inside the application.
+- Cleaner container environment
 
 ---
 
@@ -207,25 +233,25 @@ After that the AI assistant becomes available inside the application.
 This project demonstrates several **core DevOps concepts**:
 
 - Multi-stage Docker builds
-- Container networking
-- Environment-based configuration
-- Service orchestration
-- Persistent volumes
-- Local AI model deployment
-- Infrastructure portability
+- Containerized application architecture
+- Docker networking
+- Service orchestration with Docker Compose
+- Persistent Docker volumes
+- Environment variable configuration
+- AI model container integration
 
 ---
 
 # 🚀 Future Improvements
 
-Potential extensions for this project:
+Possible future improvements include:
 
-- CI/CD with **GitHub Actions**
+- CI/CD pipeline using **GitHub Actions**
 - Kubernetes deployment
 - Helm charts
-- Terraform infrastructure
+- Infrastructure provisioning using **Terraform**
 - Monitoring with **Prometheus & Grafana**
-- GitOps deployment using **ArgoCD**
+- GitOps workflow with **ArgoCD**
 
 ---
 
@@ -240,6 +266,6 @@ https://github.com/Aniruddhakharve
 
 ---
 
-# ⭐ If you found this project interesting
+# ⭐ Support
 
-Give the repository a ⭐ on GitHub!
+If you found this project interesting or useful, consider giving the repository a **star ⭐**.
