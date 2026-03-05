@@ -42,6 +42,26 @@ The application simulates a **basic banking system** and integrates a **local AI
 
 ---
 
+# 📂 Project Structure
+
+```
+AI-BankApp-DevOps
+│
+├── src/                       # Spring Boot application source
+├── .mvn/                      # Maven wrapper files
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+│
+├── Dockerfile                 # Standard Docker build
+├── Dockerfile.multistage      # Optimized multi-stage Docker build
+├── docker-compose.yml         # Multi-container setup
+│
+└── README.md
+```
+
+---
+
 # 🏗 System Architecture
 
 ```
@@ -74,7 +94,7 @@ The application simulates a **basic banking system** and integrates a **local AI
 | Branch | Description |
 |------|-------------|
 | start | Base Spring Boot banking application |
-| docker | Containerized application with Docker & Docker Compose |
+| docker | Containerized application using Docker & Docker Compose |
 
 ---
 
@@ -83,13 +103,13 @@ The application simulates a **basic banking system** and integrates a **local AI
 ### Banking System
 
 - User registration and login
-- Secure password hashing with BCrypt
+- Secure password hashing using BCrypt
 - Deposit funds
 - Withdraw funds
 - Transfer money between accounts
 - Transaction history
 
-### UI
+### User Interface
 
 - Modern Glassmorphism UI
 - Dark / Light theme
@@ -99,7 +119,7 @@ The application simulates a **basic banking system** and integrates a **local AI
 
 - Local AI chatbot
 - Powered by TinyLlama
-- Runs through Ollama
+- Runs using Ollama
 - No external API required
 
 ---
@@ -130,9 +150,9 @@ http://localhost:8081
 
 ---
 
-# 🧠 Setup AI Model
+# 🤖 Setup AI Model
 
-The first time you run the system, download the TinyLlama model:
+Download the TinyLlama model once:
 
 ```bash
 docker exec ollama ollama pull tinyllama
@@ -176,19 +196,55 @@ java -jar target/*.jar
 
 ---
 
-# 🐳 Docker Usage
+# ⚙️ Environment Variables
 
-## Build Image (Simple Dockerfile)
+| Variable | Description |
+|--------|-------------|
+| MYSQL_HOST | MySQL container hostname |
+| MYSQL_PORT | MySQL port |
+| MYSQL_DATABASE | Database name |
+| MYSQL_USER | Database username |
+| MYSQL_PASSWORD | Database password |
+| OLLAMA_URL | Ollama service URL |
 
-```bash
-docker build -t bankapp .
+---
+
+# 🐳 Docker Implementation
+
+This project demonstrates **two Docker build strategies**.
+
+---
+
+### 1️⃣ Standard Dockerfile
+
+A simple container build suitable for development.
+
+```
+Dockerfile
 ```
 
-## Build Image (Multi-Stage Dockerfile)
+---
 
-```bash
-docker build -f Dockerfile.multistage -t bankapp .
-```
+### 2️⃣ Multi-Stage Docker Build
+
+The multi-stage Dockerfile separates:
+
+**Build Stage**
+
+- Uses Java JDK
+- Compiles the Spring Boot application
+
+**Runtime Stage**
+
+- Uses lightweight Java JRE
+- Runs only the final compiled JAR
+
+Benefits:
+
+- Smaller image size
+- Faster deployments
+- Improved security
+- Cleaner container environment
 
 ---
 
@@ -232,28 +288,28 @@ docker compose down -v
 
 # 📊 DevOps Concepts Demonstrated
 
-This project demonstrates several important DevOps concepts:
+This project demonstrates several **core DevOps concepts**:
 
 - Multi-stage Docker builds
-- Containerized microservice architecture
+- Containerized application architecture
 - Docker networking
-- Docker Compose orchestration
+- Service orchestration with Docker Compose
 - Persistent Docker volumes
-- Environment-based configuration
-- Local AI model deployment
+- Environment variable configuration
+- AI model container integration
 
 ---
 
 # 🚀 Future Improvements
 
-Potential future improvements:
+Possible future improvements include:
 
-- CI/CD using GitHub Actions
+- CI/CD pipeline using **GitHub Actions**
 - Kubernetes deployment
 - Helm charts
-- Terraform infrastructure provisioning
-- Monitoring with Prometheus and Grafana
-- GitOps deployment with ArgoCD
+- Infrastructure provisioning using **Terraform**
+- Monitoring with **Prometheus & Grafana**
+- GitOps workflow with **ArgoCD**
 
 ---
 
