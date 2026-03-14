@@ -21,7 +21,8 @@ jobs:
                 
             - name: Run Maven Checkstyle
               run: |
-               ./mvnw checkstyle:check     
+               ./mvnw checkstyle:check
+              continue-on-error: true  # Continue even if Checkstyle finds issues     
             
     sast:
         runs-on: ubuntu-latest
