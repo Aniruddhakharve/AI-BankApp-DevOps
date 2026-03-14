@@ -1,27 +1,30 @@
-# 🚀 AI BankApp – DevOps Containerized Banking Application
+# 🚀 AI BankApp – DevSecOps Containerized Banking Application
 
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-green?style=for-the-badge&logo=springboot)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-green?style=for-the-badge&logo=springboot)
 ![Docker](https://img.shields.io/badge/Docker-Containerized-blue?style=for-the-badge&logo=docker)
 ![Docker Compose](https://img.shields.io/badge/Docker-Compose-blue?style=for-the-badge&logo=docker)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql)
 ![AI](https://img.shields.io/badge/AI-TinyLlama-purple?style=for-the-badge)
-![DevOps](https://img.shields.io/badge/DevOps-Practice-red?style=for-the-badge)
+![DevSecOps](https://img.shields.io/badge/DevSecOps-Pipeline-red?style=for-the-badge)
+![CI/CD](https://img.shields.io/badge/GitHub-Actions-black?style=for-the-badge&logo=githubactions)
 
 ---
 
 # 📌 Project Overview
 
-**AI BankApp** is a **Spring Boot banking application** enhanced with **DevOps practices and AI integration**.
+**AI BankApp** is a **Spring Boot banking application** enhanced with **DevSecOps practices, containerization, and AI integration**.
 
-This project demonstrates how to build and run a **modern containerized application stack** using:
+The project demonstrates how to build a **secure CI/CD pipeline and deploy a containerized application automatically to AWS EC2**.
 
-- Docker
-- Docker Compose
-- Multi-stage Docker builds
-- Local AI models with Ollama
+This repository showcases a **real-world DevSecOps workflow**, integrating:
 
-The application simulates a **basic banking system** and integrates a **local AI assistant powered by TinyLlama**.
+- Secure coding checks
+- Dependency scanning
+- Container security scanning
+- Secrets detection
+- Automated CI/CD pipeline
+- Cloud deployment
 
 ---
 
@@ -29,7 +32,7 @@ The application simulates a **basic banking system** and integrates a **local AI
 
 | Layer | Technology |
 |------|------------|
-| Backend | Spring Boot 3.4.1 |
+| Backend | Spring Boot 3.4.5 |
 | Language | Java 21 |
 | Security | Spring Security + BCrypt |
 | ORM | Spring Data JPA / Hibernate |
@@ -39,6 +42,10 @@ The application simulates a **basic banking system** and integrates a **local AI
 | LLM Model | TinyLlama |
 | Containerization | Docker |
 | Orchestration | Docker Compose |
+| CI/CD | GitHub Actions |
+| Security Scanning | Trivy, Semgrep, Gitleaks |
+| Dockerfile Lint | Hadolint |
+| Cloud Platform | AWS EC2 |
 
 ---
 
@@ -53,9 +60,19 @@ AI-BankApp-DevOps
 ├── mvnw.cmd
 ├── pom.xml
 │
-├── Dockerfile                 # Standard Docker build
-├── Dockerfile.multistage      # Optimized multi-stage Docker build
-├── docker-compose.yml         # Multi-container setup
+├── Dockerfile
+├── Dockerfile.multistage
+├── docker-compose.yml
+│
+├── .trivyignore               # Ignore known vulnerabilities
+│
+├── .github/workflows
+│   ├── ci.yml
+│   ├── lint-sast.yml
+│   ├── gitleaks.yml
+│   ├── dockerfile-lint.yml
+│   ├── image-scan.yml
+│   └── deploy.yml
 │
 └── README.md
 ```
@@ -89,46 +106,165 @@ AI-BankApp-DevOps
 
 ---
 
-# 🌱 Branch Structure
+# 🔁 DevSecOps CI/CD Pipeline
 
-| Branch | Description |
-|------|-------------|
-| start | Base Spring Boot banking application |
-| docker | Containerized application using Docker & Docker Compose |
+This project includes a **complete DevSecOps pipeline implemented with GitHub Actions**.
+
+Pipeline workflow:
+
+```
+Developer Push
+      │
+      ▼
+Lint + SAST
+      │
+      ▼
+Secrets Scan
+      │
+      ▼
+Dockerfile Lint
+      │
+      ▼
+Build Docker Image
+      │
+      ▼
+Push Image to DockerHub
+      │
+      ▼
+Container Security Scan
+      │
+      ▼
+Deploy to AWS EC2
+```
 
 ---
 
-# ⚙️ Application Features
+# ⚙️ CI/CD Pipeline Stages
 
-### Banking System
+## 1️⃣ Lint & SAST
 
-- User registration and login
-- Secure password hashing using BCrypt
-- Deposit funds
-- Withdraw funds
-- Transfer money between accounts
-- Transaction history
+Tools used:
 
-### User Interface
+- **Checkstyle** – Java code linting
+- **Semgrep** – Static application security testing
 
-- Modern Glassmorphism UI
-- Dark / Light theme
-- Responsive layout using Bootstrap
+Purpose:
 
-### AI Assistant
+- Detect insecure code patterns
+- Enforce coding standards
 
-- Local AI chatbot
-- Powered by TinyLlama
-- Runs using Ollama
-- No external API required
+---
+
+## 2️⃣ Secrets Detection
+
+Tool:
+
+**Gitleaks**
+
+Detects:
+
+- API keys
+- passwords
+- tokens accidentally pushed to Git
+
+---
+
+## 3️⃣ Dockerfile Security
+
+Tool:
+
+**Hadolint**
+
+Checks:
+
+- Dockerfile best practices
+- container security configuration
+
+---
+
+## 4️⃣ Docker Image Build & Push
+
+The CI pipeline:
+
+- Builds a Docker image
+- Tags images using:
+
+```
+latest
+commit SHA
+branch name
+```
+
+Images are pushed to:
+
+**DockerHub Registry**
+
+---
+
+## 5️⃣ Container Security Scanning
+
+Tool:
+
+**Trivy**
+
+Trivy scans:
+
+- OS vulnerabilities
+- Java dependencies
+- secrets
+- container misconfigurations
+
+A `.trivyignore` file is used to ignore **known vulnerabilities** that are already tracked.
+
+Example:
+
+```
+CVE-2025-41232
+CVE-2025-41248
+```
+
+---
+
+## 6️⃣ Automated Deployment
+
+Deployment is performed automatically after a successful build.
+
+Pipeline performs:
+
+```
+SSH into EC2
+Copy docker-compose.yml
+docker compose pull
+docker compose up -d
+```
+
+Infrastructure:
+
+**AWS EC2**
+
+---
+
+# 🚀 Application Deployment
+
+The application runs as **3 containers**.
+
+| Service | Port | Description |
+|-------|------|-------------|
+| bankapp | 8081 | Spring Boot application |
+| mysql | 3308 | MySQL database |
+| ollama | 11434 | AI model server |
+
+Application URL:
+
+```
+http://<EC2-PUBLIC-IP>:8081
+```
 
 ---
 
 # ⚡ Quick Start
 
-## Run with Docker Compose (Recommended)
-
-Clone the repository:
+## Clone Repository
 
 ```bash
 git clone https://github.com/Aniruddhakharve/AI-BankApp-DevOps.git
@@ -136,13 +272,15 @@ cd AI-BankApp-DevOps
 git checkout docker
 ```
 
-Start the application stack:
+---
 
-```bash
+## Run with Docker Compose
+
+```
 docker compose up -d --build
 ```
 
-The application will be available at:
+Access application:
 
 ```
 http://localhost:8081
@@ -152,51 +290,37 @@ http://localhost:8081
 
 # 🤖 Setup AI Model
 
-Download the TinyLlama model once:
+Pull TinyLlama model:
 
-```bash
+```
 docker exec ollama ollama pull tinyllama
 ```
 
 ---
 
-# 💻 Run Locally (Without Docker)
+# 💻 Run Without Docker
 
 ### Prerequisites
 
 - Java 21
 - Maven
-- MySQL 8.0
+- MySQL
 
-### Create Database
+### Build
 
-```sql
-CREATE DATABASE bankappdb;
+```
+./mvnw clean package
 ```
 
-### Build Application
+### Run
 
-```bash
-./mvnw clean package -DskipTests
 ```
-
-### Run Application
-
-```bash
-java -jar target/*.jar
-```
-
-### Optional Environment Variables
-
-```bash
-MYSQL_HOST=localhost MYSQL_PORT=3306 MYSQL_DATABASE=bankappdb \
-MYSQL_USER=root MYSQL_PASSWORD=yourpassword \
 java -jar target/*.jar
 ```
 
 ---
 
-# ⚙️ Environment Variables
+# 🔐 Environment Variables
 
 | Variable | Description |
 |--------|-------------|
@@ -211,13 +335,11 @@ java -jar target/*.jar
 
 # 🐳 Docker Implementation
 
-This project demonstrates **two Docker build strategies**.
+Two Docker strategies are demonstrated.
 
----
+### Standard Dockerfile
 
-### 1️⃣ Standard Dockerfile
-
-A simple container build suitable for development.
+Simple container build.
 
 ```
 Dockerfile
@@ -225,91 +347,72 @@ Dockerfile
 
 ---
 
-### 2️⃣ Multi-Stage Docker Build
+### Multi-stage Dockerfile
 
-The multi-stage Dockerfile separates:
-
-**Build Stage**
-
-- Uses Java JDK
-- Compiles the Spring Boot application
-
-**Runtime Stage**
-
-- Uses lightweight Java JRE
-- Runs only the final compiled JAR
+Optimized production build.
 
 Benefits:
 
-- Smaller image size
-- Faster deployments
-- Improved security
-- Cleaner container environment
+- smaller image
+- better security
+- faster builds
 
 ---
 
-# 🐳 Docker Compose Commands
+# 📦 Docker Compose Commands
 
-Start services:
+Start:
 
-```bash
+```
 docker compose up -d
 ```
 
-View logs:
+Logs:
 
-```bash
+```
 docker compose logs -f
 ```
 
-Stop services:
+Stop:
 
-```bash
+```
 docker compose down
 ```
 
-Stop and remove volumes:
+Remove volumes:
 
-```bash
+```
 docker compose down -v
 ```
 
 ---
 
-# 📦 Services
-
-| Service | Port | Description |
-|-------|------|-------------|
-| bankapp | 8081 | Spring Boot application |
-| mysql | 3308 | MySQL database |
-| ollama | 11434 | Local AI model server |
-
----
-
 # 📊 DevOps Concepts Demonstrated
 
-This project demonstrates several **core DevOps concepts**:
+This project demonstrates:
 
-- Multi-stage Docker builds
-- Containerized application architecture
-- Docker networking
-- Service orchestration with Docker Compose
-- Persistent Docker volumes
-- Environment variable configuration
-- AI model container integration
+- DevSecOps CI/CD pipeline
+- reusable GitHub workflows
+- container security scanning
+- dependency vulnerability management
+- secrets detection
+- Docker multi-stage builds
+- container orchestration
+- automated EC2 deployment
+- secure CI pipeline design
 
 ---
 
 # 🚀 Future Improvements
 
-Possible future improvements include:
+Potential improvements:
 
-- CI/CD pipeline using **GitHub Actions**
 - Kubernetes deployment
 - Helm charts
-- Infrastructure provisioning using **Terraform**
-- Monitoring with **Prometheus & Grafana**
-- GitOps workflow with **ArgoCD**
+- Terraform infrastructure provisioning
+- Prometheus monitoring
+- Grafana dashboards
+- ArgoCD GitOps workflow
 
 ---
 
