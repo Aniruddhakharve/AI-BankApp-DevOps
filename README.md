@@ -1,4 +1,4 @@
-# 🚀 AI BankApp – DevSecOps Containerized Banking Application
+# 🚀 AI BankApp – DevOps Containerized Banking Application
 
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-green?style=for-the-badge&logo=springboot)
@@ -6,25 +6,25 @@
 ![Docker Compose](https://img.shields.io/badge/Docker-Compose-blue?style=for-the-badge&logo=docker)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql)
 ![AI](https://img.shields.io/badge/AI-TinyLlama-purple?style=for-the-badge)
-![DevSecOps](https://img.shields.io/badge/DevSecOps-Pipeline-red?style=for-the-badge)
+![DevOps](https://img.shields.io/badge/DevOps-Practice-red?style=for-the-badge)
 ![CI/CD](https://img.shields.io/badge/GitHub-Actions-black?style=for-the-badge&logo=githubactions)
 
 ---
 
 # 📌 Project Overview
 
-**AI BankApp** is a **Spring Boot banking application** enhanced with **DevSecOps practices, containerization, and AI integration**.
+**AI BankApp** is a **Spring Boot banking application** enhanced with **DevOps practices and AI integration**.
 
-The project demonstrates how to build a **secure CI/CD pipeline and deploy a containerized application automatically to AWS EC2**.
+This project demonstrates how to build and run a **modern containerized application stack** using:
 
-This repository showcases a **real-world DevSecOps workflow**, integrating:
-
-- Secure coding checks
-- Dependency scanning
+- Docker
+- Docker Compose
+- Multi-stage Docker builds
+- Local AI models with Ollama
+- CI/CD automation using GitHub Actions
 - Container security scanning
-- Secrets detection
-- Automated CI/CD pipeline
-- Cloud deployment
+
+The application simulates a **basic banking system** and integrates a **local AI assistant powered by TinyLlama**.
 
 ---
 
@@ -64,7 +64,7 @@ AI-BankApp-DevOps
 ├── Dockerfile.multistage
 ├── docker-compose.yml
 │
-├── .trivyignore               # Ignore known vulnerabilities
+├── .trivyignore               # Ignore specific vulnerabilities
 │
 ├── .github/workflows
 │   ├── ci.yml
@@ -106,104 +106,113 @@ AI-BankApp-DevOps
 
 ---
 
+# 🌱 Branch Structure
+
+| Branch | Description |
+|------|-------------|
+| start | Base Spring Boot banking application |
+| docker | Containerized application using Docker & Docker Compose |
+
+---
+
+# ⚙️ Application Features
+
+### Banking System
+
+- User registration and login
+- Secure password hashing using BCrypt
+- Deposit funds
+- Withdraw funds
+- Transfer money between accounts
+- Transaction history
+
+### User Interface
+
+- Modern Glassmorphism UI
+- Dark / Light theme
+- Responsive layout using Bootstrap
+
+### AI Assistant
+
+- Local AI chatbot
+- Powered by TinyLlama
+- Runs using Ollama
+- No external API required
+
+---
+
 # 🔁 DevSecOps CI/CD Pipeline
 
-This project includes a **complete DevSecOps pipeline implemented with GitHub Actions**.
+This project includes a **complete DevSecOps CI/CD pipeline using GitHub Actions**.
 
-Pipeline workflow:
+Pipeline stages:
 
 ```
-Developer Push
-      │
-      ▼
+Code Push
+   │
+   ▼
 Lint + SAST
-      │
-      ▼
+   │
+   ▼
 Secrets Scan
-      │
-      ▼
+   │
+   ▼
 Dockerfile Lint
-      │
-      ▼
+   │
+   ▼
 Build Docker Image
-      │
-      ▼
+   │
+   ▼
 Push Image to DockerHub
-      │
-      ▼
-Container Security Scan
-      │
-      ▼
+   │
+   ▼
+Container Security Scan (Trivy)
+   │
+   ▼
 Deploy to AWS EC2
 ```
 
 ---
 
-# ⚙️ CI/CD Pipeline Stages
+# 🔐 Security Scanning Tools
 
-## 1️⃣ Lint & SAST
+### SAST (Static Application Security Testing)
 
-Tools used:
+Tool used:
 
-- **Checkstyle** – Java code linting
-- **Semgrep** – Static application security testing
+**Semgrep**
 
-Purpose:
-
-- Detect insecure code patterns
-- Enforce coding standards
+Detects insecure coding patterns.
 
 ---
 
-## 2️⃣ Secrets Detection
+### Secrets Detection
 
-Tool:
+Tool used:
 
 **Gitleaks**
 
 Detects:
 
 - API keys
-- passwords
-- tokens accidentally pushed to Git
+- credentials
+- tokens in repository
 
 ---
 
-## 3️⃣ Dockerfile Security
+### Dockerfile Security
 
-Tool:
+Tool used:
 
 **Hadolint**
 
-Checks:
-
-- Dockerfile best practices
-- container security configuration
+Ensures Dockerfiles follow security best practices.
 
 ---
 
-## 4️⃣ Docker Image Build & Push
+### Container Vulnerability Scanning
 
-The CI pipeline:
-
-- Builds a Docker image
-- Tags images using:
-
-```
-latest
-commit SHA
-branch name
-```
-
-Images are pushed to:
-
-**DockerHub Registry**
-
----
-
-## 5️⃣ Container Security Scanning
-
-Tool:
+Tool used:
 
 **Trivy**
 
@@ -211,76 +220,47 @@ Trivy scans:
 
 - OS vulnerabilities
 - Java dependencies
-- secrets
 - container misconfigurations
 
-A `.trivyignore` file is used to ignore **known vulnerabilities** that are already tracked.
-
-Example:
-
-```
-CVE-2025-41232
-CVE-2025-41248
-```
+A `.trivyignore` file is used to ignore known vulnerabilities.
 
 ---
 
-## 6️⃣ Automated Deployment
+# 🚀 Automated Deployment
 
-Deployment is performed automatically after a successful build.
+After a successful pipeline run:
 
-Pipeline performs:
+1. Image is pushed to DockerHub
+2. GitHub Actions connects to EC2 via SSH
+3. docker-compose.yml is copied to the server
+4. Containers are deployed automatically
+
+Deployment commands executed:
 
 ```
-SSH into EC2
-Copy docker-compose.yml
 docker compose pull
 docker compose up -d
-```
-
-Infrastructure:
-
-**AWS EC2**
-
----
-
-# 🚀 Application Deployment
-
-The application runs as **3 containers**.
-
-| Service | Port | Description |
-|-------|------|-------------|
-| bankapp | 8081 | Spring Boot application |
-| mysql | 3308 | MySQL database |
-| ollama | 11434 | AI model server |
-
-Application URL:
-
-```
-http://<EC2-PUBLIC-IP>:8081
 ```
 
 ---
 
 # ⚡ Quick Start
 
-## Clone Repository
+Clone the repository:
 
-```bash
+```
 git clone https://github.com/Aniruddhakharve/AI-BankApp-DevOps.git
 cd AI-BankApp-DevOps
 git checkout docker
 ```
 
----
-
-## Run with Docker Compose
+Start services:
 
 ```
 docker compose up -d --build
 ```
 
-Access application:
+Access the application:
 
 ```
 http://localhost:8081
@@ -290,7 +270,7 @@ http://localhost:8081
 
 # 🤖 Setup AI Model
 
-Pull TinyLlama model:
+Download the TinyLlama model once:
 
 ```
 docker exec ollama ollama pull tinyllama
@@ -298,7 +278,7 @@ docker exec ollama ollama pull tinyllama
 
 ---
 
-# 💻 Run Without Docker
+# 💻 Run Locally (Without Docker)
 
 ### Prerequisites
 
@@ -306,13 +286,13 @@ docker exec ollama ollama pull tinyllama
 - Maven
 - MySQL
 
-### Build
+### Build Application
 
 ```
 ./mvnw clean package
 ```
 
-### Run
+### Run Application
 
 ```
 java -jar target/*.jar
@@ -320,69 +300,24 @@ java -jar target/*.jar
 
 ---
 
-# 🔐 Environment Variables
+# 🐳 Docker Compose Commands
 
-| Variable | Description |
-|--------|-------------|
-| MYSQL_HOST | MySQL container hostname |
-| MYSQL_PORT | MySQL port |
-| MYSQL_DATABASE | Database name |
-| MYSQL_USER | Database username |
-| MYSQL_PASSWORD | Database password |
-| OLLAMA_URL | Ollama service URL |
-
----
-
-# 🐳 Docker Implementation
-
-Two Docker strategies are demonstrated.
-
-### Standard Dockerfile
-
-Simple container build.
-
-```
-Dockerfile
-```
-
----
-
-### Multi-stage Dockerfile
-
-Optimized production build.
-
-Benefits:
-
-- smaller image
-- better security
-- faster builds
-
----
-
-# 📦 Docker Compose Commands
-
-Start:
+Start services:
 
 ```
 docker compose up -d
 ```
 
-Logs:
+View logs:
 
 ```
 docker compose logs -f
 ```
 
-Stop:
+Stop services:
 
 ```
 docker compose down
-```
-
-Remove volumes:
-
-```
-docker compose down -v
 ```
 
 ---
@@ -393,26 +328,23 @@ This project demonstrates:
 
 - DevSecOps CI/CD pipeline
 - reusable GitHub workflows
-- container security scanning
-- dependency vulnerability management
-- secrets detection
 - Docker multi-stage builds
-- container orchestration
+- container security scanning
+- secrets detection
+- Docker Compose orchestration
 - automated EC2 deployment
-- secure CI pipeline design
+- vulnerability management with Trivy
 
 ---
 
 # 🚀 Future Improvements
 
-Potential improvements:
-
 - Kubernetes deployment
 - Helm charts
-- Terraform infrastructure provisioning
+- Terraform infrastructure
 - Prometheus monitoring
 - Grafana dashboards
-- ArgoCD GitOps workflow
+- GitOps using ArgoCD
 
 ---
 
