@@ -26,7 +26,7 @@ jobs:
                 image-ref: ${{ secrets.DOCKER_USERNAME }}/bankapp:${{ github.sha }}
                 format: 'table'
                 severity: HIGH,CRITICAL   # Only report HIGH and CRITICAL vulnerabilities
-                ignorefile: ${{github.workspace}}/.trivyignore 
+                ignorefile: ${{github.workspace}}/.trivyignore # Path to .trivyignore file in the repository
                 ignore-unfixed: true   # Ignore vulnerabilities that do not have a fix available
                 exit-code: "1"  # Set exit code to 1 if vulnerabilities are found
                 
