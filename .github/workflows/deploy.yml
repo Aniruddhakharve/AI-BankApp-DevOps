@@ -32,6 +32,6 @@ jobs:
           script: |
             cd /home/ubuntu
 
-            docker compose down || true
-            docker compose pull
-            docker compose up -d
+            docker compose -f Docker-compose.yml down || true
+            docker compose -f Docker-compose.yml pull
+            docker compose -f Docker-compose.yml up -d
