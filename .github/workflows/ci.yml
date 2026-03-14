@@ -44,3 +44,4 @@ jobs:
     needs:
       - build-and-push
     uses: ./.github/workflows/deploy.yml
+    secrets: inherit
