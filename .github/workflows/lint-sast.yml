@@ -33,5 +33,5 @@ jobs:
             - name: Run Semgrep SAST
               uses: returntocorp/semgrep-action@v1
               with:
-                config: auto   
+                config: p/java  
            
