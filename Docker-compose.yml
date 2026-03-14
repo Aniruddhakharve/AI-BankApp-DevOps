@@ -63,9 +63,10 @@ services:
 
 
   bankapp:
-    build:
-      context: .
-      dockerfile: Dockerfile.multistage
+    image: aniruddhakharve/bankapp:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.multistage
     container_name: bankapp
     ports:
     - "8081:8080"
