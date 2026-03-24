@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bankapp-deployment
+  namespace: bankapp
+  labels:
+    app: bankapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bankapp
+  template:
+    metadata:
+      labels:
+        app: bankapp
+    spec:
+      containers:
+      - name: bankapp
+        image: aniruddhakharve/bankapp:k8s
+        ports:
+        - containerPort: 8081
+        envFrom:
+          - configMapRef:
+                name: bankapp-config-map
+
+          - secretRef:
+                 name: bankapp-secrets    
+
